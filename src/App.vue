@@ -15,7 +15,7 @@
                 <hr>
                 <button class="btn btn-primary" v-on:click="fetchData">Get Data</button><br><br>
                 <ul class="list-group">
-                    <li class="list-group-item" v-for="x in fetchedUser">{{x.userName}}--{{x.userEmail}}</li>
+                    <li class="list-group-item" v-for="x in fetchedUser">{{x}}{{x.userName}}--{{x.userEmail}}</li>
                 </ul>
             </div>
         </div>
@@ -35,12 +35,8 @@
                 this.$http.post('https://vuejs-http-4e9e1.firebaseio.com/AmanData.json', this.user).then(response=>{ console.log(response) }, error=>{ console.log(error) });
             },
             fetchData(){
-                this.$http.get('https://vuejs-http-4e9e1.firebaseio.com/AmanData.json').then(response=>{  var v= response.json(); console.log(v); return v; })
-                    .then(receivedData=>{ const resultArr=[];
-                                          for(let key in receivedData){
-                                             resultArr.push(receivedData[key]);
-                                          }
-                                          this.fetchedUser=resultArr; } );
+                this.$http.get('https://vuejs-http-4e9e1.firebaseio.com/AmanData.json').then(response=>{ return response.json(); })
+                    .then(receivedData=>{  this.fetchedUser=receivedData; } );
             }
         }
     }
