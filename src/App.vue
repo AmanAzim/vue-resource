@@ -37,7 +37,10 @@
             fetchData(){
                 this.$http.get('https://vuejs-http-4e9e1.firebaseio.com/AmanData.json').then(response=>{ return response.json(); })
                     .then(receivedData=>{ const resultArr=[];
-                                          for(let key)});
+                                          for(let key in receivedData){
+                                             resultArr.push(receivedData[key]);
+                                          }
+                                          this.fetchedUser=resultArr; } );
             }
         }
     }
