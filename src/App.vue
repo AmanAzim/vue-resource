@@ -35,7 +35,7 @@
                 this.$http.post('https://vuejs-http-4e9e1.firebaseio.com/AmanData.json', this.user).then(response=>{ console.log(response) }, error=>{ console.log(error) });
             },
             fetchData(){
-                this.$http.get('https://vuejs-http-4e9e1.firebaseio.com/AmanData.json').then(response=>{ return response.json(); })
+                this.$http.get('').then(response=>{ return response.json(); })
                     .then(receivedData=>{  let resultArr=[];
                                             for(let x in receivedData){
                                                 resultArr.push(receivedData[x]);
