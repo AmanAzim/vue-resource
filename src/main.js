@@ -6,7 +6,7 @@ Vue.use(VueResource);
 
 Vue.http.options.root='https://vuejs-http-4e9e1.firebaseio.com/';
 
-Vue.http.interceptors.push( (request, next)=>{
+/*Vue.http.interceptors.push( (request, next)=>{
   console.log(request);
   if(request.method=='POST'){
     request.method='PUT';
@@ -14,7 +14,7 @@ Vue.http.interceptors.push( (request, next)=>{
   next( response=>{
     response.json= ()=>{ return {message: response.body}; }
   });
-} );
+} ); */
 
 new Vue({
   el: '#app',

@@ -36,28 +36,52 @@
         },
         methods:{
             submit(){
-               //1// this.$http.post('https://vuejs-http-4e9e1.firebaseio.com/AmanData.json', this.user).then(response=>{ console.log(response) }, error=>{ console.log(error) });
-               //2// this.resource.save({}, this.user); // save:{method:'POST'} see documentation of vue-resource in gitHub
+               //1//
+                // this.$http.post('https://vuejs-http-4e9e1.firebaseio.com/AmanData.json', this.user).then(response=>{ console.log(response) }, error=>{ console.log(error) });
+
+
+              //2////submitting data using Vue Resource// save:{method:'POST'} see documentation of vue-resource in gitHub
+               //  this.resource.save({}, this.user);
+
+              //3//
                 this.resource.saveAlt(this.user);
+
+              //4//to create and to send data to "alternative2" node
+                //this.resource.saveAlt2(this.user);
             },
             fetchData(){
-              /*  this.$http.get('AmanData.json').then(response=>{ return response.json(); })
-                    .then(receivedData=>{   /*let resultArr=[];
+                //1//////Without using Vue resource
+              /* this.$http.get('AmanData.json').then(response=>{ return response.json(); })
+                    .then(receivedData=>{   let resultArr=[];
                                             for(let x in receivedData){
                                                 resultArr.push(receivedData[x]);
                                             }
-                                            this.fetchedUser=resultArr;
+                                           // this.fetchedUser=resultArr;
                                            this.fetchedUser=receivedData; } ); */
-                    this.resource.getData({node: this.node}).then(response=>{ return response.json(); })
-                        .then(receivedData=>{this.fetchedUser=receivedData;} );
+
+
+                //2////// Get data using  Vue Resource
+                //this.resource.get('').then(response=>{ return response.json(); }).then(receivedData=>{ this.fetchedUser=receivedData;} );
+
+
+                //3//
+                this.resource.get({node:this.node}).then(response=>{ return response.json(); }).then(receivedData=>{ this.fetchedUser=receivedData;} );
             }
         },
         created(){
-            const customAction={  //this is created to POST new data in a different node "alretnative.json" so that the data of first node "AmanData" not get overwritten by the new data. so the new data will go to the new node.
+            const customAction={  //this is created to POST new data in a different node "alretnative.json" . so the new data will go to the new node.
                 saveAlt:{method:'POST', url:'alternative.json'},
+
+                saveAlt2:{method:'POST', url:'alternative2.json'},
+
+                saveAlt3:{method:'POST', url:'alternative3.json'},
+
                 getData:{method:'GET'}
             };
-            //this.resource=this.$resource('{node}.json'); // without creating the "alternative.json" so all data will go to the first node "AmanData.json"
+           //1// this.resource=this.$resource('AmanData.json'); //A new node "AmanData.json" will be created and all data will under that
+
+           // this.resource=this.$resource('{node}.json'); //On each submission a new unique node will be created and each data will go under a separate unique node.
+
             this.resource=this.$resource('{node}.json', {}, customAction);
         }
     }
