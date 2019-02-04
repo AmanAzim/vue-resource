@@ -28,20 +28,30 @@
             return{
                 user:{userName:'', userEmail:''},
                 fetchedUser:[], //array to collect all the received user objects
+                resource:{},
             };
         },
         methods:{
             submit(){
-                this.$http.post('https://vuejs-http-4e9e1.firebaseio.com/AmanData.json', this.user).then(response=>{ console.log(response) }, error=>{ console.log(error) });
+               // this.$http.post('https://vuejs-http-4e9e1.firebaseio.com/AmanData.json', this.user).then(response=>{ console.log(response) }, error=>{ console.log(error) });
+               // this.resource.save({}, this.user); // save:{method:'POST'} see documentation of vue-resource in gitHub
+                this.resource.saveAlt(this.user);
             },
             fetchData(){
-                this.$http.get('').then(response=>{ return response.json(); })
-                    .then(receivedData=>{  let resultArr=[];
+                this.$http.get('AmanData.json').then(response=>{ return response.json(); })
+                    .then(receivedData=>{   /*let resultArr=[];
                                             for(let x in receivedData){
                                                 resultArr.push(receivedData[x]);
                                             }
-                                           this.fetchedUser=resultArr; } );
+                                            this.fetchedUser=resultArr; */
+                                           this.fetchedUser=receivedData; } );
             }
+        },
+        created(){
+            const customAction={
+                saveAlt:{method:'POST', url:'alternative.json'}
+            };
+            this.resource=this.$resource('AmanData.json', {}, customAction);
         }
     }
 </script>
